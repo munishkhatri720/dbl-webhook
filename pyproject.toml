@@ -1,0 +1,17 @@
+[project]
+name = "dbl-webhook"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "aiohttp>=3.10.10",
+    "aiosqlite>=0.20.0",
+    "discord>=2.3.2",
+    "fastapi>=0.115.4",
+    "python-dotenv>=1.0.1",
+    "rich>=13.9.4",
+    "sqlalchemy>=2.0.36",
+    "sqlmodel>=0.0.22",
+    "uvicorn>=0.32.0",
+]
