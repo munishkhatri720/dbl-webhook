@@ -63,10 +63,10 @@ async def vote(request: Request,background_tasks: BackgroundTasks ,  session: As
 async def vote_check(user_id : int , session : AsyncSession = Depends(get_session)) -> Response:
     result = await session.execute(select(VoteDBModel).where(VoteDBModel.user_id == user_id))
     vote =  result.scalars().first()
-    if vote and vote.timestamp > datetime.now(timezone.utc):
+    if vote and vote.timestamp.replace(tzinfo=timezone.utc) > datetime.now(timezone.utc):
         return JSONResponse({'voted': True} , status_code=200)
     
-    if vote and vote.timestamp < datetime.now(timezone.utc):
+    if vote and vote.timestamp.replace(tzinfo=timezone.utc) < datetime.now(timezone.utc):
     
         return JSONResponse({'voted': False} , status_code=200)
     
