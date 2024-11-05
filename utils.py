@@ -41,7 +41,7 @@ async def fetch_upvotes(db_session : AsyncSession) -> None:
                     new_vote = Vote(
                         user_id=vote.user_id,
                         username=vote.username,
-                        timestamp=vote.timestamp
+                        timestamp=vote.timestamp + timedelta(hours=12)
                     )
                     db_session.add(new_vote)
                     print("[-] Added fetched vote from api  to database.")
