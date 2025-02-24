@@ -34,7 +34,7 @@ app = FastAPI(debug=True , lifespan=lifespan)
 async def background_task(voter : Voter , session : AsyncSession) -> None:
     results = await session.execute(select(VoteDBModel).where(VoteHistory.user_id == voter.id))
     await post_webhook(voter , len(results.scalars().all()))
-    await fetch_upvotes(db_session=session)
+    #await fetch_upvotes(db_session=session)
     
 
 @app.post('/votes')
