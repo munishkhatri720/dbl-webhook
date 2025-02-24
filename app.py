@@ -31,9 +31,9 @@ async def lifespan(app : FastAPI) -> AsyncGenerator:
 app = FastAPI(debug=True , lifespan=lifespan)
 
 
-async def background_task(voter : Voter , session : AsyncSession) -> None:
-    results = await session.execute(select(VoteDBModel).where(VoteHistory.user_id == voter.id))
-    await post_webhook(voter , len(results.scalars().all()))
+async def background_task(voter : Voter ) -> None:
+    #results = await session.execute(select(VoteDBModel).where(VoteHistory.user_id == voter.id))
+    await post_webhook(voter , 0)
     #await fetch_upvotes(db_session=session)
     
 
@@ -56,7 +56,7 @@ async def vote(request: Request,background_tasks: BackgroundTasks ,  session: As
         print("[-] Added new vote data.")
     session.add(VoteHistory(user_id=voter.id , username=voter.username , timestamp=datetime.now(timezone.utc)))    
     await session.commit()  
-    background_tasks.add_task(background_task , voter ,  session)
+    background_tasks.add_task(background_task , voter)
     return Response(status_code=200)
 
 @app.get('/votes/{user_id}/check')
